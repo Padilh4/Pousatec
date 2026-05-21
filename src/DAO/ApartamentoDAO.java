@@ -116,6 +116,26 @@ public class ApartamentoDAO {
                  throw new RuntimeException("Erro ao atualizar: " + e.getMessage());
              }
          }
+         
+         public List<Apartamento> getApartamento(){
+        List<Apartamento> apartamentos = new ArrayList<>();
+        try{
+            String sql = "select * from Apartamentos";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("apartamentoID");
+                String Status = rs.getString("status_limpeza");
+                int Capacidade = rs.getInt("capacidade_maxima");
+                double ValorDiaria = rs.getDouble("valor_diaria_base");
+                
+                apartamentos.add(new Apartamento(id, Status, ValorDiaria, Capacidade));            
+            }
+        }catch(SQLException e){
+                    e.printStackTrace();
+                    }
+        return apartamentos;
+    }
 }
 
 

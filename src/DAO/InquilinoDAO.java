@@ -45,8 +45,8 @@ public class InquilinoDAO {
                        String nome = rs.getString("Nome");
                        String Telefone = rs.getString("Telefone");
                        
-                       i = new Inquilino(nome, Telefone);
-                       i.setId(ID);
+                       i = new Inquilino(ID, nome, Telefone);
+                       
                         
                     }
                     
@@ -81,6 +81,23 @@ public class InquilinoDAO {
         }
 
         return lista;
+    }
+     public List<Inquilino> getInquilino(){
+        List<Inquilino> inquilinos = new ArrayList<>();
+        try{
+            String sql = "select * from Inquilinos";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("InquilinoID");
+                String Nome = rs.getString("Nome");
+                String Telefone = rs.getString("Telefone");
+                inquilinos.add(new Inquilino(id, Nome, Telefone ));            
+            }
+        }catch(SQLException e){
+                    e.printStackTrace();
+                    }
+        return inquilinos;
     }
      
 }

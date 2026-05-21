@@ -18,6 +18,14 @@ public class Inquilino {
         this.Telefone = Telefone;
     }
 
+    public Inquilino(int id, String nome, String Telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.Telefone = Telefone;
+    }
+    
+    
+
     public Inquilino() {
     }
     

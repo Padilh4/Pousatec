@@ -20,6 +20,15 @@ public class Apartamento {
         this.Capacidade = Capacidade;
     }
 
+    public Apartamento(int id, String status, double ValorDiaria, int Capacidade) {
+        this.id = id;
+        this.status = status;
+        this.ValorDiaria = ValorDiaria;
+        this.Capacidade = Capacidade;
+    }
+    
+    
+
     public Apartamento() {
     }
 

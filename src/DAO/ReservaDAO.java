@@ -101,6 +101,50 @@ public class ReservaDAO {
                 return null;
                 
 }
+    
+    public Reserva buscarApPorId(int idAP) throws SQLException {
+                String sql = "SELECT * FROM Reservas INNER JOIN Apartamentos ON Reservas.apartamentoID = Apartamentos.apartamentoID WHERE Reservas.apartamentoID = ?";
+                Reserva r = null;
+                Inquilino i = new Inquilino();
+                Apartamento a = new Apartamento();
+                InquilinoDAO iDAO = new InquilinoDAO();
+                ApartamentoDAO aDAO = new ApartamentoDAO();
+                try{
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, idAP);
+                    ResultSet rs = stmt.executeQuery();
+                    
+                    if (rs.next()){
+                        r = new Reserva();
+                        r.setId(rs.getInt("ReservaID"));
+                        r.setDataCheckin(rs.getObject("data_checkin", LocalDate.class));
+                        r.setDataCheckout(rs.getObject("data_checkout", LocalDate.class));
+                        
+                        int idInq = rs.getInt("InquilinoID");
+                        i = iDAO.buscarPorId(idInq);
+                        
+                        r.setInquilino(i);
+                        int idApt = rs.getInt("apartamentoID");
+                        a = aDAO.buscarPorId(idApt);
+                        r.setApartamento(a);
+                        if(rs.getString("usa_ar_condicionado").equalsIgnoreCase("sim")){
+                            r.setArCondicionado(true);
+                        }else{
+                            r.setArCondicionado(false);
+                        }
+                        r.setValorTotal(rs.getDouble("valor_total"));
+                        r.setPagantes(rs.getInt("total_pagantes"));
+                        r.setCriancas(rs.getInt("total_criancas"));
+                        return r;
+                    }
+                    
+                } catch (SQLException e){
+                    throw new RuntimeException("Erro ao buscar ID: " + e.getMessage());
+                }
+                return null;
+                
+}
+    
      public List<Reserva> listar() {
         String sql = "SELECT r.*, a.apartamentoID AS ApartamentoID, i.nome AS nome_inquilino FROM Reservas r LEFT JOIN Apartamentos a ON r.apartamentoID = a.apartamentoID LEFT JOIN Inquilinos i ON r.InquilinoID = i.InquilinoID;";
 
@@ -172,4 +216,47 @@ public class ReservaDAO {
              throw new RuntimeException("Erro ao cancelar Reserva: " + e.getMessage());
          }
      }
+     public List<Reserva> getReserva(){
+        List<Reserva> reservas = new ArrayList<>();
+        try{
+            String sql = "select * from Reservas";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int ReservaID = rs.getInt("ReservaID");
+                String data_checkin = rs.getString("data_checkin");
+                String data_checkout = rs.getString("data_checkout");
+                int InquilinoID = rs.getInt("InquilinoID");
+                int apartamentoID = rs.getInt("apartamentoID");
+                String ArCond = rs.getString("usa_ar_condicionado");
+                double valor_total = rs.getDouble("valor_total");
+                int total_pagantes = rs.getInt("total_pagantes");
+                int total_criancas = rs.getInt("total_criancas");
+                LocalDate checkin = LocalDate.parse(data_checkin);
+                LocalDate checkout = LocalDate.parse(data_checkout);
+                Inquilino i = new Inquilino();
+                i.setId(InquilinoID);
+                Apartamento a = new Apartamento();
+                a.setId(apartamentoID);
+                Reserva novor = new Reserva();
+                novor.setId(ReservaID);
+                novor.setDataCheckin(checkin);
+                novor.setDataCheckout(checkout);
+                novor.setInquilino(i);
+                novor.setApartamento(a);
+                if(ArCond.equals("sim")){
+                    novor.setArCondicionado(true);
+                }else{
+                    novor.setArCondicionado(false);
+                }
+                novor.setValorTotal(valor_total);
+                novor.setPagantes(total_pagantes);
+                novor.setCriancas(total_criancas);
+                reservas.add(novor);            
+            }
+        }catch(SQLException e){
+                    e.printStackTrace();
+                    }
+        return reservas;
+    }
 }

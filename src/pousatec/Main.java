@@ -36,7 +36,6 @@ public class Main {
             System.out.println(" -- Sistema de Gerenciamento de Pousada -- ");
             System.out.println("1 - Cadastros");
             System.out.println("2 - Listas");
-            
             System.out.println("3 - Gerenciar Apartamentos");
             System.out.println("4 - Gerenciar Reservas");
             System.out.println("0 - Sair do Programa");
@@ -369,8 +368,8 @@ if (i == null || a == null) {
                     case 3:
                         System.out.println(" - EXPORTAR INVENTÁRIO (EXCEL) - ");
                         teclado.nextLine();
-                    System.out.println("Digite o nome do arquivo (ex:relatorio_reserva: ");
-                    String nomeArquivo = teclado.nextLine();
+                        System.out.println("Digite o nome do arquivo (ex:relatorio_reserva: ");
+                        String nomeArquivo = teclado.nextLine();
                     
               
                     String caminhoCompleto = nomeArquivo + ".csv";

@@ -28,6 +28,19 @@ public class Reserva {
         this.Pagantes = Pagantes;
         this.Criancas = Criancas;
     }
+
+    public Reserva(int id, LocalDate dataCheckin, LocalDate dataCheckout, Inquilino inquilino, Apartamento apartamento, boolean ArCondicionado, double ValorTotal, int Pagantes, int Criancas) {
+        this.id = id;
+        this.dataCheckin = dataCheckin;
+        this.dataCheckout = dataCheckout;
+        this.inquilino = inquilino;
+        this.apartamento = apartamento;
+        this.ArCondicionado = ArCondicionado;
+        this.ValorTotal = ValorTotal;
+        this.Pagantes = Pagantes;
+        this.Criancas = Criancas;
+    }
+    
     
     
     
