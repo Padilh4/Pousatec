@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import util.ExportadorCSV;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author ARTHURCARDOSOPADILHA
@@ -27,6 +27,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        try {
+    // Carrega a imagem do seu ícone
+    java.net.URL url = getClass().getResource("/view/POUSADA-removebg-preview (1).png");
+    if (url != null) {
+        ImageIcon icon = new ImageIcon(url);
+        this.setIconImage(icon.getImage());
+    } else {
+        System.out.println("Aviso: Imagem do ícone não foi encontrada no caminho especificado.");
+    }
+} catch (Exception e) {
+    System.out.println("Erro ao carregar o ícone: " + e.getMessage());
+}
     }
 
     /**
